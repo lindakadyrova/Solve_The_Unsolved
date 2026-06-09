@@ -1,27 +1,67 @@
 package com.kadyrova.solve_the_unsolved.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.kadyrova.solve_the_unsolved.data.Suspect
 import com.kadyrova.solve_the_unsolved.data.suspects
 
 @Composable
 fun SuspectScreen() {
-    Column(modifier = Modifier.Companion.padding(16.dp)) {
+    var selectedSuspect by remember {
+        mutableStateOf<Suspect?>(null)
+    }
+
+    var resultMessage by remember {
+        mutableStateOf("")
+    }
+
+    Column(modifier = Modifier.padding(16.dp)) {
         Text("Suspects")
 
         suspects.forEach { suspect ->
-            Card(modifier = Modifier.Companion.padding(vertical = 8.dp)) {
-                Column(modifier = Modifier.Companion.padding(12.dp)) {
+            Card(
+                modifier = Modifier
+                    .padding(vertical = 8.dp)
+                    .clickable {
+                        selectedSuspect = suspect
+                        resultMessage = ""
+                    }
+            ) {
+                Column(modifier = Modifier.padding(12.dp)) {
                     Text(suspect.name)
                     Text("Motive: ${suspect.motive}")
                     Text("Alibi: ${suspect.alibi}")
                 }
             }
+        }
+
+        selectedSuspect?.let { suspect ->
+            Text("Selected Suspect")
+            Text("Name: ${suspect.name}")
+            Text("Motive: ${suspect.motive}")
+            Text("Alibi: ${suspect.alibi}")
+            Text("Clue: ${suspect.clue}")
+
+            Button(onClick = {
+                resultMessage = if (suspect.isCulprit) {
+                    "Correct! You solved the case."
+                } else {
+                    "Wrong suspect. Try again."
+                }
+            }) {
+                Text("Accuse Suspect")
+            }
+        }
+
+        if (resultMessage.isNotEmpty()) {
+            Text(resultMessage)
         }
     }
 }

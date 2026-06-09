@@ -5,5 +5,6 @@ data class Suspect(
     val name: String,
     val motive: String,
     val alibi: String,
+    val clue: String,
     val isCulprit: Boolean
 )
