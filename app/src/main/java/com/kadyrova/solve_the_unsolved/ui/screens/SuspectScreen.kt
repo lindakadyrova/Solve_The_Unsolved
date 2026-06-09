@@ -26,39 +26,42 @@ fun SuspectScreen() {
         Text("Suspects")
 
         suspects.forEach { suspect ->
+            var expanded by remember {
+                mutableStateOf(false)
+            }
             Card(
                 modifier = Modifier
                     .padding(vertical = 8.dp)
                     .clickable {
+                        expanded = !expanded
                         selectedSuspect = suspect
                         resultMessage = ""
                     }
             ) {
                 Column(modifier = Modifier.padding(12.dp)) {
                     Text(suspect.name)
+                    if (expanded) {
+                        Text("Motive: ${suspect.motive}")
+                        Text("Alibi: ${suspect.alibi}")
+                        Text("Clue: ${suspect.clue}")
+
+                        Button(onClick = {
+                            resultMessage = if (suspect.isCulprit) {
+                                "Correct! You solved the case."
+                            } else {
+                                "Wrong suspect. Try again."
+                            }
+                        }) {
+                            Text("Accuse Suspect")
+                        }
+                    }
                     Text("Motive: ${suspect.motive}")
                     Text("Alibi: ${suspect.alibi}")
                 }
             }
         }
 
-        selectedSuspect?.let { suspect ->
-            Text("Selected Suspect")
-            Text("Name: ${suspect.name}")
-            Text("Motive: ${suspect.motive}")
-            Text("Alibi: ${suspect.alibi}")
-            Text("Clue: ${suspect.clue}")
 
-            Button(onClick = {
-                resultMessage = if (suspect.isCulprit) {
-                    "Correct! You solved the case."
-                } else {
-                    "Wrong suspect. Try again."
-                }
-            }) {
-                Text("Accuse Suspect")
-            }
-        }
 
         if (resultMessage.isNotEmpty()) {
             Text(resultMessage)
