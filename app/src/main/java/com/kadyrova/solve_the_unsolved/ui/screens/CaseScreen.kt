@@ -35,6 +35,6 @@ fun CaseScreen() {
             }
         }
     } else {
-        SuspectScreen()
+        SuspectScreen(selectedCase!!.suspects)
     }
 }

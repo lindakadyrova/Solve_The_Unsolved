@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.kadyrova.solve_the_unsolved.data.suspects
 import com.kadyrova.solve_the_unsolved.ui.screens.CaseScreen
 import com.kadyrova.solve_the_unsolved.ui.screens.SuspectScreen
 import com.kadyrova.solve_the_unsolved.ui.theme.Solve_The_UnsolvedTheme
